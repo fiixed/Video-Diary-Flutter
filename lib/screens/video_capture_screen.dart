@@ -51,6 +51,7 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> with WidgetsBin
   
   @override
   void dispose() {
+   
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -133,6 +134,7 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> with WidgetsBin
       return AspectRatio(
         aspectRatio: controller.value.aspectRatio,
         child: CameraPreview(controller),
+        
       );
     }
   }
@@ -176,7 +178,8 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> with WidgetsBin
         IconButton(
           icon: const Icon(Icons.videocam),
           color: Colors.blue,
-          onPressed: controller != null &&
+          onPressed: 
+          controller != null &&
                   controller.value.isInitialized &&
                   !controller.value.isRecordingVideo
               ? onVideoRecordButtonPressed

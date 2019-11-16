@@ -49,7 +49,7 @@ class VideosProvider with ChangeNotifier {
     return File(thumbnail);
   }
 
-  Future<void> fetchAndSetPlaces() async {
+  Future<void> fetchAndSetVideos() async {
     final dataList = await DBHelper.getData('user_videos');
     print(dataList);
     _items = dataList

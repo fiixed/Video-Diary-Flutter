@@ -12,6 +12,7 @@ class VideosGridScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black87,
       appBar: AppBar(
         leading: Container(),
         title: Text('Your Videos'),
@@ -26,7 +27,7 @@ class VideosGridScreen extends StatelessWidget {
       ),
       body: FutureBuilder(
         future: Provider.of<VideosProvider>(context, listen: false)
-            .fetchAndSetPlaces(),
+            .fetchAndSetVideos(),
         builder: (ctx, snapshot) => snapshot.connectionState ==
                 ConnectionState.waiting
             ? Center(

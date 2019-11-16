@@ -6,6 +6,7 @@ import 'package:video_player/video_player.dart';
 import '../screens/video_capture_screen.dart';
 import '../screens/videos_grid_screen.dart';
 import '../providers/videos_provider.dart';
+import '../widgets/location_input.dart';
 
 class AddVideoScreen extends StatefulWidget {
   static const routeName = '/add-video';
@@ -41,9 +42,9 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
 
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
-      aspectRatio: 2 / 3,
+      aspectRatio: 0.6666666666666666,
       autoPlay: true,
-      looping: true,
+      looping: false,
       allowFullScreen: false,
     );
   }
@@ -90,9 +91,14 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
                 ),
                 Center(
                   child: Chewie(
+                    
                     controller: _chewieController,
                   ),
                 ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                LocationInput(),
                 RaisedButton.icon(
                   icon: Icon(Icons.delete),
                   label: Text('Delete Video'),
