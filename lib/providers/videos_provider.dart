@@ -62,10 +62,7 @@ class VideosProvider with ChangeNotifier {
                 videoPath: item['videoPath'],
               ),
         )
-        .toList();
-        
-    notifyListeners();
-        
-    
+        .toList(); 
+    notifyListeners();   
   }
 }
