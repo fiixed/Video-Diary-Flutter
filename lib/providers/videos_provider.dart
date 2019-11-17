@@ -51,8 +51,7 @@ class VideosProvider with ChangeNotifier {
 
   Future<void> fetchAndSetVideos() async {
     final dataList = await DBHelper.getData('user_videos');
-    print(dataList);
-    _items = dataList
+    _items = dataList.reversed
         .map(
           (item) => Video(
                 id: item['id'],
@@ -64,9 +63,9 @@ class VideosProvider with ChangeNotifier {
               ),
         )
         .toList();
+        
     notifyListeners();
         
-
     
   }
 }
