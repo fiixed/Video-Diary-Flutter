@@ -7,7 +7,7 @@ class VideoLocation {
   final double longitude;
   final String address;
 
-  VideoLocation({
+  const VideoLocation({
     @required this.latitude,
     @required this.longitude,
     this.address,
