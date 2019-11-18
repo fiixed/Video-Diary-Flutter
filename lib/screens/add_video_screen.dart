@@ -7,6 +7,8 @@ import '../screens/video_capture_screen.dart';
 import '../screens/videos_grid_screen.dart';
 import '../providers/videos_provider.dart';
 import '../widgets/location_input.dart';
+import '../helpers/location_helper.dart';
+import '../models/video.dart';
 
 class AddVideoScreen extends StatefulWidget {
   static const routeName = '/add-video';
@@ -19,7 +21,7 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
   String _videoPath;
-  File _pickedVideo;
+  VideoLocation _videoLocation;
 
   @override
   void initState() {
@@ -57,14 +59,19 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
   }
 
   void _saveVideo() async {
-    if (_videoPath == null) {
+    if (_videoPath == null || _videoLocation == null) {
       return;
     }
     File thumbnail = await Provider.of<VideosProvider>(context, listen: false)
         .getThumbnail(_videoPath);
     Provider.of<VideosProvider>(context, listen: false)
-        .addVideo(_videoPath, thumbnail, _titleController.text);
+        .addVideo(_videoPath, thumbnail, _videoLocation, _titleController.text);
     Navigator.of(context).pushReplacementNamed(VideosGridScreen.routeName);
+  }
+
+  void _selectLocation(double lat, double lng) async {
+    final apiKey = await LocationHelper.getApiKey();
+    _videoLocation = VideoLocation(latitude: lat, longitude: lng);
   }
 
   @override
@@ -91,14 +98,13 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
                 ),
                 Center(
                   child: Chewie(
-                    
                     controller: _chewieController,
                   ),
                 ),
                 SizedBox(
                   height: 10.0,
                 ),
-                LocationInput(),
+                LocationInput(_selectLocation),
                 RaisedButton.icon(
                   icon: Icon(Icons.delete),
                   label: Text('Delete Video'),

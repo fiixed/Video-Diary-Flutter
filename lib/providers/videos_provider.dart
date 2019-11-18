@@ -5,6 +5,7 @@ import 'package:video_thumbnail/video_thumbnail.dart';
 
 import '../models/video.dart';
 import '../helpers/db_helper.dart';
+import '../helpers/location_helper.dart';
 
 class VideosProvider with ChangeNotifier {
   int _quality = 50;
@@ -17,13 +18,22 @@ class VideosProvider with ChangeNotifier {
     return [..._items];
   }
 
-  void addVideo(String pickedVideoPath, File pickedThumbnail,
-      [String pickedTitle = '']) {
+  Future<void> addVideo(
+      String pickedVideoPath, File pickedThumbnail, VideoLocation videoLocation,
+      [String pickedTitle = '']) async {
+    final apiKey = await LocationHelper.getApiKey();
+    final address = await LocationHelper.getPlaceAddress(
+        videoLocation.latitude, videoLocation.longitude, apiKey);
+    final updatedLocation = VideoLocation(
+      latitude: videoLocation.latitude,
+      longitude: videoLocation.longitude,
+      address: address,
+    );
     final newVideo = Video(
       id: DateTime.now().toString(),
       videoPath: pickedVideoPath,
       title: pickedTitle,
-      location: null,
+      location: updatedLocation,
       thumbnailPath: pickedThumbnail.path,
       thumbnail: pickedThumbnail,
     );
@@ -35,6 +45,9 @@ class VideosProvider with ChangeNotifier {
       'title': newVideo.title,
       'thumbnailPath': newVideo.thumbnailPath,
       'videoPath': newVideo.videoPath,
+      'loc_lat': newVideo.location.latitude,
+      'loc_lng': newVideo.location.longitude,
+      'address': newVideo.location.address,
     });
   }
 
@@ -54,15 +67,19 @@ class VideosProvider with ChangeNotifier {
     _items = dataList.reversed
         .map(
           (item) => Video(
-                id: item['id'],
-                title: item['title'],
-                location: null, 
-                thumbnail: File(item['thumbnailPath']), 
-                thumbnailPath: item['thumbnailPath'], 
-                videoPath: item['videoPath'],
-              ),
+            id: item['id'],
+            title: item['title'],
+            location: VideoLocation(
+              latitude: item['loc_lat'],
+              longitude: item['loc_lng'],
+              address: item['address'],
+            ),
+            thumbnail: File(item['thumbnailPath']),
+            thumbnailPath: item['thumbnailPath'],
+            videoPath: item['videoPath'],
+          ),
         )
-        .toList(); 
-    notifyListeners();   
+        .toList();
+    notifyListeners();
   }
 }

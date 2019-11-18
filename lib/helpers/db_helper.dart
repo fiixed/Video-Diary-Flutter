@@ -8,7 +8,7 @@ class DBHelper {
     return sql.openDatabase(path.join(dbPath, 'videos.db'),
         onCreate: (db, version) {
       return db.execute(
-          'CREATE TABLE user_videos(id TEXT PRIMARY KEY, title TEXT, thumbnailPath TEXT, videoPath TEXT)');
+          'CREATE TABLE user_videos(id TEXT PRIMARY KEY, title TEXT, thumbnailPath TEXT, videoPath TEXT, loc_lat REAL, loc_lng REAL, address TEXT)');
     }, version: 1);
   }
 

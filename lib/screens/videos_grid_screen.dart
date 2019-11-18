@@ -54,8 +54,11 @@ class VideosGridScreen extends StatelessWidget {
                                             widthScreen / heightScreen + 0.15,
                                         crossAxisCount: 2),
                                 itemBuilder: (BuildContext context, int index) {
-                                  return Image.file(
-                                      videosProvider.items[index].thumbnail);
+                                  return GridTile(
+                                    header: Text(videosProvider.items[index].location.address),
+                                    child: Image.file(
+                                        videosProvider.items[index].thumbnail),
+                                  );
                                 },
                               ),
                   ),
