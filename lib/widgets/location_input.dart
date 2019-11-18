@@ -14,20 +14,28 @@ class LocationInput extends StatefulWidget {
 
 class _LocationInputState extends State<LocationInput> {
   String _previewImageUrl;
+  String _apiKey;
 
-  Future<void> _getCurrentUserLocation() async {
-    final locData = await Location().getLocation();
-    final apiKey = await LocationHelper.getApiKey();
-
+  void _showPreview(double lat, double lng) {
     final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
-      latitude: locData.latitude,
-      longitude: locData.longitude,
-      apiKey: apiKey,
+      latitude: lat,
+      longitude: lng,
+      apiKey: _apiKey,
     );
     setState(() {
       _previewImageUrl = staticMapImageUrl;
     });
-    widget.onSelectLocation(locData.latitude, locData.longitude);
+  }
+
+  Future<void> _getCurrentUserLocation() async {
+    try {
+      final locData = await Location().getLocation();
+      _apiKey = await LocationHelper.getApiKey();
+      _showPreview(locData.latitude, locData.longitude);
+      widget.onSelectLocation(locData.latitude, locData.longitude);
+    } catch (e) {
+      return;
+    }
   }
 
   Future<void> _selectOnMap() async {
@@ -44,9 +52,9 @@ class _LocationInputState extends State<LocationInput> {
     if (selectedLocation == null) {
       return;
     }
-
-    widget.onSelectLocation(selectedLocation.latitude, selectedLocation.longitude);
-
+    _showPreview(selectedLocation.latitude, selectedLocation.longitude);
+    widget.onSelectLocation(
+        selectedLocation.latitude, selectedLocation.longitude);
   }
 
   @override
