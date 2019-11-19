@@ -54,10 +54,13 @@ class VideosGridScreen extends StatelessWidget {
                                             widthScreen / heightScreen + 0.15,
                                         crossAxisCount: 2),
                                 itemBuilder: (BuildContext context, int index) {
-                                  return GridTile(
-                                    header: Text(videosProvider.items[index].location.address),
-                                    child: Image.file(
-                                        videosProvider.items[index].thumbnail),
+                                  return GestureDetector(
+                                                                      child: GridTile(
+                                      header: Text(videosProvider.items[index].location.address),
+                                      child: Image.file(
+                                          videosProvider.items[index].thumbnail),
+                                    ),
+                                    onTap: null,
                                   );
                                 },
                               ),

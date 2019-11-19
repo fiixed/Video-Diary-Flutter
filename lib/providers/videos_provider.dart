@@ -18,6 +18,10 @@ class VideosProvider with ChangeNotifier {
     return [..._items];
   }
 
+  Video findById(String id) {
+    return _items.firstWhere((video) => video.id == id);
+  }
+
   Future<void> addVideo(
       String pickedVideoPath, File pickedThumbnail, VideoLocation videoLocation,
       [String pickedTitle = '']) async {
