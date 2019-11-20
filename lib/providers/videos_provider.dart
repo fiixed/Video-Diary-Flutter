@@ -42,7 +42,7 @@ class VideosProvider with ChangeNotifier {
       thumbnail: pickedThumbnail,
     );
     print(pickedThumbnail.path);
-    _items.add(newVideo);
+    _items.insert(0, newVideo);
     notifyListeners();
     DBHelper.insert('user_videos', {
       'id': newVideo.id,
