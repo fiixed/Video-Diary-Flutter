@@ -16,7 +16,8 @@ class _LocationInputState extends State<LocationInput> {
   String _previewImageUrl;
   String _apiKey;
 
-  void _showPreview(double lat, double lng) {
+  void _showPreview(double lat, double lng) async {
+    _apiKey = await LocationHelper.getApiKey();
     final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
       latitude: lat,
       longitude: lng,

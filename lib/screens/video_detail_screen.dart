@@ -5,6 +5,7 @@ import '../providers/videos_provider.dart';
 import '../screens/map_screen.dart';
 
 class VideoDetailScreen extends StatelessWidget {
+  static const routeName = '/video-detail';
   const VideoDetailScreen({Key key}) : super(key: key);
 
   @override

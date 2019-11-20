@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import './video_capture_screen.dart';
 import '../providers/videos_provider.dart';
+import '../screens/video_detail_screen.dart';
 
 class VideosGridScreen extends StatelessWidget {
   static const routeName = '/videos-grid-screen';
@@ -34,37 +35,41 @@ class VideosGridScreen extends StatelessWidget {
       body: FutureBuilder(
         future: Provider.of<VideosProvider>(context, listen: false)
             .fetchAndSetVideos(),
-        builder: (ctx, snapshot) =>
-            snapshot.connectionState == ConnectionState.waiting
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Consumer<VideosProvider>(
-                    child: Center(
-                      child: Text('Got no videos yet, start creating some!'),
-                    ),
-                    builder: (ctx, videosProvider, ch) =>
-                        videosProvider.items.length <= 0
-                            ? ch
-                            : GridView.builder(
-                                itemCount: videosProvider.items.length,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                        childAspectRatio:
-                                            widthScreen / heightScreen + 0.15,
-                                        crossAxisCount: 2),
-                                itemBuilder: (BuildContext context, int index) {
-                                  return GestureDetector(
-                                                                      child: GridTile(
-                                      header: Text(videosProvider.items[index].location.address),
-                                      child: Image.file(
-                                          videosProvider.items[index].thumbnail),
-                                    ),
-                                    onTap: null,
-                                  );
-                                },
-                              ),
-                  ),
+        builder: (ctx, snapshot) => snapshot.connectionState ==
+                ConnectionState.waiting
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Consumer<VideosProvider>(
+                child: Center(
+                  child: Text('Got no videos yet, start creating some!'),
+                ),
+                builder: (ctx, videosProvider, ch) => videosProvider
+                            .items.length <=
+                        0
+                    ? ch
+                    : GridView.builder(
+                        itemCount: videosProvider.items.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            childAspectRatio: widthScreen / heightScreen + 0.15,
+                            crossAxisCount: 2),
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            child: GridTile(
+                              header: Text(
+                                  videosProvider.items[index].location.address),
+                              child: Image.file(
+                                  videosProvider.items[index].thumbnail),
+                            ),
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                  VideoDetailScreen.routeName,
+                                  arguments: videosProvider.items[index].id);
+                            },
+                          );
+                        },
+                      ),
+              ),
       ),
     );
   }

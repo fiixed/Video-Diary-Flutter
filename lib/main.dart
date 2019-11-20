@@ -6,6 +6,7 @@ import './providers/videos_provider.dart';
 import './screens/videos_grid_screen.dart';
 import './screens/add_video_screen.dart';
 import './screens/video_capture_screen.dart';
+import './screens/video_detail_screen.dart';
 
 List<CameraDescription> cameras;
 
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
           AddVideoScreen.routeName: (ctx) => AddVideoScreen(),
           VideoCaptureScreen.routeName: (ctx) => VideoCaptureScreen(cameras),
           VideosGridScreen.routeName: (ctx) => VideosGridScreen(),
+          VideoDetailScreen.routeName: (ctx) => VideoDetailScreen(),
         },
       ),
     );
