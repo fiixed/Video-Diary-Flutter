@@ -35,42 +35,88 @@ class VideosGridScreen extends StatelessWidget {
       body: FutureBuilder(
         future: Provider.of<VideosProvider>(context, listen: false)
             .fetchAndSetVideos(),
-        builder: (ctx, snapshot) => snapshot.connectionState ==
-                ConnectionState.waiting
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : Consumer<VideosProvider>(
-                child: Center(
-                  child: Text('Got no videos yet, start creating some!'),
-                ),
-                builder: (ctx, videosProvider, ch) => videosProvider
-                            .items.length <=
-                        0
-                    ? ch
-                    : GridView.builder(
-                        itemCount: videosProvider.items.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            childAspectRatio: widthScreen / heightScreen + 0.15,
-                            crossAxisCount: 2),
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            child: GridTile(
-                              header: Text(
-                                  videosProvider.items[index].location.address),
-                              child: Image.file(
-                                  videosProvider.items[index].thumbnail),
-                            ),
-                            onTap: () {
-                              Navigator.of(context).pushNamed(
-                                  VideoDetailScreen.routeName,
-                                  arguments: videosProvider.items[index].id);
-                            },
-                          );
-                        },
+        builder: (ctx, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Consumer<VideosProvider>(
+                    child: Center(
+                      child: Text(
+                        'Got no videos yet, start creating some!',
+                        style: TextStyle(color: Colors.white),
                       ),
-              ),
+                    ),
+                    builder: (ctx, videosProvider, ch) =>
+                        videosProvider.items.length <= 0
+                            ? ch
+                            : GridView.builder(
+                                itemCount: videosProvider.items.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        childAspectRatio:
+                                            widthScreen / heightScreen + 0.15,
+                                        crossAxisCount: 2),
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                          VideoDetailScreen.routeName,
+                                          arguments:
+                                              videosProvider.items[index].id);
+                                    },
+                                    child: GridTile(
+                                      footer: GridTileBar(
+                                        backgroundColor: Colors.black45,
+                                        title: _GridTitleText(
+                                            videosProvider.items[index].title),
+                                        subtitle: _GridTitleText(videosProvider
+                                            .items[index].location.address),
+                                        // trailing: Icon(
+                                        //   icon,
+                                        //   color: Colors.white,
+                                        // ),
+                                      ),
+                                      child: Image.file(
+                                        videosProvider.items[index].thumbnail,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  );
+                                  // return GestureDetector(
+
+                                  // child: GridTile(
+                                  //   header: Text(
+                                  //       videosProvider.items[index].location.address),
+                                  //       footer: ,
+                                  //   child: Image.file(
+                                  //       videosProvider.items[index].thumbnail),
+                                  // ),
+                                  // onTap: () {
+                                  //   Navigator.of(context).pushNamed(
+                                  //       VideoDetailScreen.routeName,
+                                  //       arguments: videosProvider.items[index].id);
+                                  // },
+                                  // );
+                                },
+                              ),
+                  ),
       ),
+    );
+  }
+}
+
+class _GridTitleText extends StatelessWidget {
+  const _GridTitleText(this.text);
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      alignment: Alignment.centerLeft,
+      child: Text(text),
     );
   }
 }
