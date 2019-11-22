@@ -24,7 +24,7 @@ class VideosProvider with ChangeNotifier {
 
   Future<void> addVideo(
       String pickedVideoPath, File pickedThumbnail, VideoLocation videoLocation,
-      [String pickedTitle = '']) async {
+      String pickedMood) async {
     final apiKey = await LocationHelper.getApiKey();
     final address = await LocationHelper.getPlaceAddress(
         videoLocation.latitude, videoLocation.longitude, apiKey);
@@ -36,7 +36,7 @@ class VideosProvider with ChangeNotifier {
     final newVideo = Video(
       id: DateTime.now().toString(),
       videoPath: pickedVideoPath,
-      title: pickedTitle,
+      mood: pickedMood,
       location: updatedLocation,
       thumbnailPath: pickedThumbnail.path,
       thumbnail: pickedThumbnail,
@@ -46,7 +46,7 @@ class VideosProvider with ChangeNotifier {
     notifyListeners();
     DBHelper.insert('user_videos', {
       'id': newVideo.id,
-      'title': newVideo.title,
+      'mood': newVideo.mood,
       'thumbnailPath': newVideo.thumbnailPath,
       'videoPath': newVideo.videoPath,
       'loc_lat': newVideo.location.latitude,
@@ -72,7 +72,7 @@ class VideosProvider with ChangeNotifier {
         .map(
           (item) => Video(
             id: item['id'],
-            title: item['title'],
+            mood: item['mood'],
             location: VideoLocation(
               latitude: item['loc_lat'],
               longitude: item['loc_lng'],

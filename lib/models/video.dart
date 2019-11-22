@@ -16,7 +16,7 @@ class VideoLocation {
 
 class Video {
   final String id;
-  final String title;
+  final String mood;
   final VideoLocation location;
   final String videoPath;
   final String thumbnailPath;
@@ -24,7 +24,7 @@ class Video {
 
   Video({
     @required this.id,
-    this.title,
+    @required this.mood,
     @required this.location,
     @required this.videoPath,
     @required this.thumbnailPath,

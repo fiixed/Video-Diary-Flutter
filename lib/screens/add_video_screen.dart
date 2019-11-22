@@ -8,6 +8,7 @@ import '../screens/videos_grid_screen.dart';
 import '../providers/videos_provider.dart';
 import '../widgets/location_input.dart';
 import '../helpers/location_helper.dart';
+import '../widgets/mood_dropdown_button.dart';
 import '../models/video.dart';
 
 class AddVideoScreen extends StatefulWidget {
@@ -22,6 +23,7 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
   ChewieController _chewieController;
   String _videoPath;
   VideoLocation _videoLocation;
+  String _mood = 'One';
 
   @override
   void initState() {
@@ -65,13 +67,19 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
     File thumbnail = await Provider.of<VideosProvider>(context, listen: false)
         .getThumbnail(_videoPath);
     Provider.of<VideosProvider>(context, listen: false)
-        .addVideo(_videoPath, thumbnail, _videoLocation, _titleController.text);
+        .addVideo(_videoPath, thumbnail, _videoLocation, _mood);
     Navigator.of(context).pushReplacementNamed(VideosGridScreen.routeName);
   }
 
   void _selectLocation(double lat, double lng) async {
     final apiKey = await LocationHelper.getApiKey();
     _videoLocation = VideoLocation(latitude: lat, longitude: lng);
+  }
+
+  _updateMood(String text) {
+    setState(() {
+      _mood = text;
+    });
   }
 
   @override
@@ -89,10 +97,11 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                TextField(
-                  decoration: InputDecoration(labelText: 'Title'),
-                  controller: _titleController,
-                ),
+                // TextField(
+                //   decoration: InputDecoration(labelText: 'Title'),
+                //   controller: _titleController,
+                // ),
+                MoodDropdownButton(_updateMood),
                 SizedBox(
                   height: 10.0,
                 ),

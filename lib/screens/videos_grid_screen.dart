@@ -68,8 +68,8 @@ class VideosGridScreen extends StatelessWidget {
                                     child: GridTile(
                                       footer: GridTileBar(
                                         backgroundColor: Colors.black45,
-                                        title: _GridTitleText(
-                                            videosProvider.items[index].title),
+                                        title: _GridTitleText( 
+                                            videosProvider.items[index].mood),
                                         subtitle: _GridTitleText(videosProvider
                                             .items[index].location.address),
                                         // trailing: Icon(

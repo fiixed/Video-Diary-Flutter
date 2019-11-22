@@ -15,7 +15,7 @@ class VideoDetailScreen extends StatelessWidget {
         Provider.of<VideosProvider>(context, listen: false).findById(id);
     return Scaffold(
       appBar: AppBar(
-        title: Text(selectedVideo.title),
+        title: Text(selectedVideo.mood),
       ),
       body: Column(
         children: <Widget>[
