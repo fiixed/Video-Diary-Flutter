@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+
 class MoodDropdownButton extends StatefulWidget {
   final void Function(String value) parentAction;
 
@@ -10,7 +12,7 @@ class MoodDropdownButton extends StatefulWidget {
 }
 
 class _MoodDropdownButtonState extends State<MoodDropdownButton> {
-  String dropdownValue = 'One';
+  String dropdownValue = '😀';
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
@@ -19,21 +21,21 @@ class _MoodDropdownButtonState extends State<MoodDropdownButton> {
           iconSize: 24,
           elevation: 16,
           style: TextStyle(color: Colors.deepPurple),
-          underline: Container(
-            height: 2,
-            color: Colors.deepPurpleAccent,
-          ),
+          // underline: Container(
+          //   height: 2,
+          //   color: Colors.deepPurpleAccent,
+          // ),
           onChanged: (String newValue) {
             setState(() {
               dropdownValue = newValue;
               widget.parentAction(dropdownValue);
             });
           },
-          items: <String>['One', 'Two', 'Free', 'Four']
+          items: <String>['😀', '😡', '😥', '😍']
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value),
+              child: Text(value, style: TextStyle(fontSize: 30),),
             );
           }).toList(),
         );
