@@ -16,6 +16,12 @@ class _LocationInputState extends State<LocationInput> {
   String _previewImageUrl;
   String _apiKey;
 
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentUserLocation();
+  }
+
   void _showPreview(double lat, double lng) async {
     _apiKey = await LocationHelper.getApiKey();
     final staticMapImageUrl = LocationHelper.generateLocationPreviewImage(
@@ -77,22 +83,22 @@ class _LocationInputState extends State<LocationInput> {
                   width: double.infinity,
                 ),
         ),
-        Row(
-          children: <Widget>[
-            FlatButton.icon(
-              icon: Icon(Icons.location_on),
-              label: Text('Current Location'),
-              textColor: Theme.of(context).primaryColor,
-              onPressed: _getCurrentUserLocation,
-            ),
+        // Row(
+        //   children: <Widget>[
+            // FlatButton.icon(
+            //   icon: Icon(Icons.location_on),
+            //   label: Text('Current Location'),
+            //   textColor: Theme.of(context).primaryColor,
+            //   onPressed: _getCurrentUserLocation,
+            // ),
             FlatButton.icon(
               icon: Icon(Icons.map),
               label: Text('Select on Map'),
               textColor: Theme.of(context).primaryColor,
               onPressed: _selectOnMap,
             ),
-          ],
-        )
+        //   ],
+        // ),
       ],
     );
   }

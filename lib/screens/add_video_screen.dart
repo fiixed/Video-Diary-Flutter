@@ -23,7 +23,7 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
   ChewieController _chewieController;
   String _videoPath;
   VideoLocation _videoLocation;
-  String _mood = 'One';
+  String _mood = '😀';
 
   @override
   void initState() {
@@ -90,52 +90,58 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
           leading: Container(),
           title: Text('Add a New Video'),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                // TextField(
-                //   decoration: InputDecoration(labelText: 'Title'),
-                //   controller: _titleController,
-                // ),
-                MoodDropdownButton(_updateMood),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Center(
-                  child: Chewie(
-                    controller: _chewieController,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    children: <Widget>[
+                      // TextField(
+                      //   decoration: InputDecoration(labelText: 'Title'),
+                      //   controller: _titleController,
+                      // ),
+                      MoodDropdownButton(_updateMood),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Center(
+                        child: Chewie(
+                          controller: _chewieController,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      LocationInput(_selectLocation),
+                      
+                    ],
                   ),
                 ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                LocationInput(_selectLocation),
-                RaisedButton.icon(
-                  icon: Icon(Icons.delete),
-                  label: Text('Delete Video'),
-                  elevation: 0,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  color: Theme.of(context).errorColor,
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushReplacementNamed(VideoCaptureScreen.routeName);
-                  },
-                ),
-                RaisedButton.icon(
-                  icon: Icon(Icons.add),
-                  label: Text('Add Video'),
-                  elevation: 0,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  color: Theme.of(context).accentColor,
-                  onPressed: _saveVideo,
-                ),
-              ],
+              ),
             ),
-          ),
+            RaisedButton.icon(
+                        icon: Icon(Icons.delete),
+                        label: Text('Delete Video'),
+                        elevation: 0,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        color: Theme.of(context).errorColor,
+                        onPressed: () {
+                          Navigator.of(context).pushReplacementNamed(
+                              VideoCaptureScreen.routeName);
+                        },
+                      ),
+                      RaisedButton.icon(
+                        icon: Icon(Icons.add),
+                        label: Text('Add Video'),
+                        elevation: 0,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        color: Theme.of(context).accentColor,
+                        onPressed: _saveVideo,
+                      ),
+          ],
         ),
       ),
     );
