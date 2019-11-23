@@ -27,19 +27,29 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
     selectedVideo =
         Provider.of<VideosProvider>(context, listen: false).findById(id);
 
-  _videoPlayerController = VideoPlayerController.file(File(selectedVideo.videoPath));
-        _chewieController = ChewieController(
-      videoPlayerController: _videoPlayerController,
-      aspectRatio: 0.6666666666666666,
-      autoPlay: true,
-      looping: false,
-      allowFullScreen: false,
-    );
+    if (_videoPlayerController == null) {
+      _videoPlayerController =
+          VideoPlayerController.file(File(selectedVideo.videoPath));
+      _chewieController = ChewieController(
+        videoPlayerController: _videoPlayerController,
+        aspectRatio: 0.6666666666666666,
+        autoPlay: true,
+        looping: false,
+        allowFullScreen: true,
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _videoPlayerController.pause();
+    _videoPlayerController.dispose();
+    _chewieController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(

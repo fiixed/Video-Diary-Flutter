@@ -40,16 +40,18 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
 
   @override
   void didChangeDependencies() {
-    _videoPath = ModalRoute.of(context).settings.arguments as String;
-    _videoPlayerController = VideoPlayerController.file(File(_videoPath));
+    if (_videoPlayerController == null) {
+      _videoPath = ModalRoute.of(context).settings.arguments as String;
+      _videoPlayerController = VideoPlayerController.file(File(_videoPath));
 
-    _chewieController = ChewieController(
-      videoPlayerController: _videoPlayerController,
-      aspectRatio: 0.6666666666666666,
-      autoPlay: true,
-      looping: false,
-      allowFullScreen: false,
-    );
+      _chewieController = ChewieController(
+        videoPlayerController: _videoPlayerController,
+        aspectRatio: 0.6666666666666666,
+        autoPlay: true,
+        looping: false,
+        allowFullScreen: true,
+      );
+    }
   }
 
   @override
@@ -115,31 +117,30 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
                         height: 10.0,
                       ),
                       LocationInput(_selectLocation),
-                      
                     ],
                   ),
                 ),
               ),
             ),
             RaisedButton.icon(
-                        icon: Icon(Icons.delete),
-                        label: Text('Delete Video'),
-                        elevation: 0,
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        color: Theme.of(context).errorColor,
-                        onPressed: () {
-                          Navigator.of(context).pushReplacementNamed(
-                              VideoCaptureScreen.routeName);
-                        },
-                      ),
-                      RaisedButton.icon(
-                        icon: Icon(Icons.add),
-                        label: Text('Add Video'),
-                        elevation: 0,
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        color: Theme.of(context).accentColor,
-                        onPressed: _saveVideo,
-                      ),
+              icon: Icon(Icons.delete),
+              label: Text('Delete Video'),
+              elevation: 0,
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              color: Theme.of(context).errorColor,
+              onPressed: () {
+                Navigator.of(context)
+                    .pushReplacementNamed(VideoCaptureScreen.routeName);
+              },
+            ),
+            RaisedButton.icon(
+              icon: Icon(Icons.add),
+              label: Text('Add Video'),
+              elevation: 0,
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              color: Theme.of(context).accentColor,
+              onPressed: _saveVideo,
+            ),
           ],
         ),
       ),
