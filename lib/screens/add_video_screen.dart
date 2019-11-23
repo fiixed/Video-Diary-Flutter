@@ -18,7 +18,6 @@ class AddVideoScreen extends StatefulWidget {
 }
 
 class _AddVideoScreenState extends State<AddVideoScreen> {
-  final _titleController = TextEditingController();
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
   String _videoPath;
