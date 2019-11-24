@@ -85,7 +85,6 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
                       ),
                       FlatButton(
                         child: Text('View on Map'),
-                        textColor: Theme.of(context).primaryColor,
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(

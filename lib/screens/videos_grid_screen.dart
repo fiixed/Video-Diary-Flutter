@@ -19,10 +19,9 @@ class VideosGridScreen extends StatelessWidget {
     final double heightScreen =
         mediaQueryData.size.height - paddingBottom - appBarHeight;
     return Scaffold(
-      backgroundColor: Colors.black87,
       appBar: AppBar(
         leading: Container(),
-        title: Text('Your Videos'),
+        title: Text('VIDEO DIARY'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
