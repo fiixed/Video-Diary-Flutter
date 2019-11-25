@@ -53,7 +53,11 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(selectedVideo.mood),
+          title: Text(
+            Provider.of<VideosProvider>(context, listen: false).getDate(selectedVideo.id),
+            style: Theme.of(context).textTheme.title,
+          ),
+          centerTitle: true,
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -69,6 +73,13 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
                           controller: _chewieController,
                         ),
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(selectedVideo.mood, style: TextStyle(
+                          fontSize: 40,
+                          
+                        ),),
                       SizedBox(
                         height: 10,
                       ),

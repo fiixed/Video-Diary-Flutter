@@ -28,7 +28,8 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Map'),
+        title: Text('Your Map', style: Theme.of(context).textTheme.title,),
+        centerTitle: true,
         actions: <Widget>[
           if (widget.isSelecting)
             IconButton(

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:intl/intl.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -20,6 +21,11 @@ class VideosProvider with ChangeNotifier {
 
   Video findById(String id) {
     return _items.firstWhere((video) => video.id == id);
+  }
+
+  String getDate(String id) {
+    Video pickedVideo = _items.firstWhere((video) => video.id == id, orElse: () => _items[0]);
+    return DateFormat.yMEd().add_jms().format(DateTime.parse(pickedVideo.id)) ;
   }
 
   Future<void> addVideo(

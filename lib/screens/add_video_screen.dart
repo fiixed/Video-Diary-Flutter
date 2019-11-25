@@ -89,7 +89,8 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
       child: Scaffold(
         appBar: AppBar(
           leading: Container(),
-          title: Text('Add a New Video'),
+          title: Text('Add a New Video', style: Theme.of(context).textTheme.title,),
+          centerTitle: true,
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

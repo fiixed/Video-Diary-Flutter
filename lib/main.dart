@@ -27,10 +27,14 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider.value(
       value: VideosProvider(),
       child: MaterialApp(
-        title: 'VIDEO DIARY',
+        title: 'Video Diary',
         theme: ThemeData.dark().copyWith(
           primaryColor: Color(0xFF0A0E21),
           scaffoldBackgroundColor: Color(0xFF0A0E21),
+          accentColor: Colors.green,
+          textTheme: TextTheme(
+            title: TextStyle(fontFamily: 'Raleway', fontWeight: FontWeight.bold),
+          ),
         ),
         home: VideosGridScreen(),
         routes: {

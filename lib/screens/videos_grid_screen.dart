@@ -21,7 +21,8 @@ class VideosGridScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
-        title: Text('VIDEO DIARY'),
+        title: Text('VIDEO DIARY', style: Theme.of(context).textTheme.title,),
+        centerTitle: true,
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
@@ -68,9 +69,10 @@ class VideosGridScreen extends StatelessWidget {
                                       footer: GridTileBar(
                                         backgroundColor: Colors.black45,
                                         title: _GridTitleText( 
-                                            videosProvider.items[index].mood),
+                                          videosProvider.getDate(videosProvider.items[index].id)
+                                            ),
                                         subtitle: _GridTitleText(videosProvider
-                                            .items[index].location.address),
+                                            .items[index].mood, ),
                                         // trailing: Icon(
                                         //   icon,
                                         //   color: Colors.white,

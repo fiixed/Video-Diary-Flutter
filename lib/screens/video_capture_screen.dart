@@ -33,7 +33,8 @@ IconData getCameraLensIcon(CameraLensDirection direction) {
 void logError(String code, String message) =>
     print('Error: $code\nError Message: $message');
 
-class _VideoCaptureScreenState extends State<VideoCaptureScreen> with WidgetsBindingObserver {
+class _VideoCaptureScreenState extends State<VideoCaptureScreen>
+    with WidgetsBindingObserver {
   CameraController controller;
   String imagePath;
   String videoPath;
@@ -41,17 +42,14 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> with WidgetsBin
   VoidCallback videoPlayerListener;
   bool enableAudio = true;
 
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
   }
 
-  
   @override
   void dispose() {
-   
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -78,7 +76,11 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> with WidgetsBin
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: const Text('Video Capture'),
+        title: Text(
+          'Video Capture',
+          style: Theme.of(context).textTheme.title,
+        ),
+        centerTitle: true,
       ),
       body: Column(
         children: <Widget>[
@@ -113,7 +115,6 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> with WidgetsBin
           ),
           _toggleAudioWidget(),
           _captureControlRowWidget(),
-          
         ],
       ),
     );
@@ -134,7 +135,6 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> with WidgetsBin
       return AspectRatio(
         aspectRatio: controller.value.aspectRatio,
         child: CameraPreview(controller),
-        
       );
     }
   }
@@ -178,8 +178,7 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> with WidgetsBin
         IconButton(
           icon: const Icon(Icons.videocam),
           color: Colors.blue,
-          onPressed: 
-          controller != null &&
+          onPressed: controller != null &&
                   controller.value.isInitialized &&
                   !controller.value.isRecordingVideo
               ? onVideoRecordButtonPressed
@@ -298,7 +297,8 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> with WidgetsBin
       if (mounted) setState(() {});
       //showInSnackBar('Video recorded to: $videoPath');
     });
-    Navigator.of(context).pushNamed(AddVideoScreen.routeName, arguments: videoPath);
+    Navigator.of(context)
+        .pushNamed(AddVideoScreen.routeName, arguments: videoPath);
   }
 
   void onPauseButtonPressed() {
@@ -434,7 +434,3 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen> with WidgetsBin
     showInSnackBar('Error: ${e.code}\n${e.description}');
   }
 }
-
-
-
-
