@@ -106,10 +106,10 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
           Padding(
             padding: const EdgeInsets.all(5.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 _cameraTogglesRowWidget(),
-                //_thumbnailWidget(),
+                
               ],
             ),
           ),
@@ -212,6 +212,8 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
 
   /// Display a row of toggle to select the camera (or a message if no camera is available).
   Widget _cameraTogglesRowWidget() {
+    var mediaQueryData = MediaQuery.of(context);
+    final double widthScreen = mediaQueryData.size.width;
     final List<Widget> toggles = <Widget>[];
 
     if (widget.cameras.isEmpty) {
@@ -220,16 +222,16 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
       for (CameraDescription cameraDescription in widget.cameras) {
         toggles.add(
           SizedBox(
-            width: 90.0,
-            child: RadioListTile<CameraDescription>(
-              title: Icon(getCameraLensIcon(cameraDescription.lensDirection)),
-              groupValue: controller?.description,
-              value: cameraDescription,
-              onChanged: controller != null && controller.value.isRecordingVideo
-                  ? null
-                  : onNewCameraSelected,
+              width: widthScreen/3.4,
+              child: RadioListTile<CameraDescription>(
+                title: Icon(getCameraLensIcon(cameraDescription.lensDirection)),
+                groupValue: controller?.description,
+                value: cameraDescription,
+                onChanged: controller != null && controller.value.isRecordingVideo
+                    ? null
+                    : onNewCameraSelected,
+              ),
             ),
-          ),
         );
       }
     }

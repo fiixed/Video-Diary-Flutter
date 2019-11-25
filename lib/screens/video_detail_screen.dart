@@ -19,13 +19,18 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
   Video selectedVideo;
+  VideosProvider videosProvider;
+  String videoDate;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     final id = ModalRoute.of(context).settings.arguments;
-    selectedVideo =
-        Provider.of<VideosProvider>(context, listen: false).findById(id);
+    videosProvider = Provider.of<VideosProvider>(context, listen: false);
+    selectedVideo = videosProvider.findById(id);
+    videoDate = Provider.of<VideosProvider>(context, listen: false)
+                .getDate(selectedVideo.id);
+
 
     if (_videoPlayerController == null) {
       _videoPlayerController =
@@ -54,7 +59,7 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            Provider.of<VideosProvider>(context, listen: false).getDate(selectedVideo.id),
+            videoDate,
             style: Theme.of(context).textTheme.title,
           ),
           centerTitle: true,
@@ -76,10 +81,12 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text(selectedVideo.mood, style: TextStyle(
+                      Text(
+                        selectedVideo.mood,
+                        style: TextStyle(
                           fontSize: 40,
-                          
-                        ),),
+                        ),
+                      ),
                       SizedBox(
                         height: 10,
                       ),

@@ -89,7 +89,10 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
       child: Scaffold(
         appBar: AppBar(
           leading: Container(),
-          title: Text('Add a New Video', style: Theme.of(context).textTheme.title,),
+          title: Text(
+            'Add a New Video',
+            style: Theme.of(context).textTheme.title,
+          ),
           centerTitle: true,
         ),
         body: Column(
@@ -105,7 +108,20 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
                       //   decoration: InputDecoration(labelText: 'Title'),
                       //   controller: _titleController,
                       // ),
-                      MoodDropdownButton(_updateMood),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Mood',
+                            style: Theme.of(context).textTheme.headline,
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          MoodDropdownButton(_updateMood),
+                        ],
+                      ),
+
                       SizedBox(
                         height: 10.0,
                       ),

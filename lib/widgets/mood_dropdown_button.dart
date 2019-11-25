@@ -31,7 +31,7 @@ class _MoodDropdownButtonState extends State<MoodDropdownButton> {
               widget.parentAction(dropdownValue);
             });
           },
-          items: <String>['😀', '😡', '😥', '😍']
+          items: <String>['😀', '🤣', '🥰', '😍', '😔', '😢', '🤬', '🤮', '🤔', '🙄']
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,

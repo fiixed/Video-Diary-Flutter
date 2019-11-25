@@ -31,9 +31,10 @@ class MyApp extends StatelessWidget {
         theme: ThemeData.dark().copyWith(
           primaryColor: Color(0xFF0A0E21),
           scaffoldBackgroundColor: Color(0xFF0A0E21),
-          accentColor: Colors.green,
+          accentColor: Color.fromRGBO(218, 53, 88, 0),
           textTheme: TextTheme(
             title: TextStyle(fontFamily: 'Raleway', fontWeight: FontWeight.bold),
+            headline: TextStyle(fontFamily: 'RobotoCondensed'),
           ),
         ),
         home: VideosGridScreen(),
