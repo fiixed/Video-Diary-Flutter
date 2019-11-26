@@ -31,10 +31,12 @@ class MyApp extends StatelessWidget {
         theme: ThemeData.dark().copyWith(
           primaryColor: Color(0xFF0A0E21),
           scaffoldBackgroundColor: Color(0xFF0A0E21),
-          accentColor: Color.fromRGBO(218, 53, 88, 0),
+          accentColor: Color.fromRGBO(218, 53, 88, 100),
           textTheme: TextTheme(
-            title: TextStyle(fontFamily: 'Raleway', fontWeight: FontWeight.bold),
-            headline: TextStyle(fontFamily: 'RobotoCondensed'),
+            title: TextStyle(fontFamily: 'ModernMachine'),
+            headline: TextStyle(fontFamily: 'Mollen', fontWeight: FontWeight.bold),
+            body1: TextStyle(fontFamily: 'Mollen'),
+            button: TextStyle(fontFamily: 'Mollen'),
           ),
         ),
         home: VideosGridScreen(),

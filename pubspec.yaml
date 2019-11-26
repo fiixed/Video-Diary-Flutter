@@ -78,6 +78,14 @@ flutter:
           weight: 700
         - asset: assets/fonts/Raleway-Black.ttf
           weight: 900
+    - family: ModernMachine
+      fonts:
+        - asset: assets/fonts/Modern-Machine.ttf
+    - family: Mollen
+      fonts:
+        - asset: assets/fonts/Mollen-Regular.otf
+        - asset: assets/fonts/Mollen-Bold.otf
+          weight: 700
     - family: RobotoCondensed
       fonts:
         - asset: assets/fonts/RobotoCondensed-Regular.ttf
