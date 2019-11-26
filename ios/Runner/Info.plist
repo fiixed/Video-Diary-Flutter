@@ -22,6 +22,21 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Can I use the camera please?</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Can I use the mic please?</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Can I get the location when in use please?</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Can I get the location always please?</string>
+	<key>io.flutter.embedded_views_preview</key>
+	<string>YES</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+  	<key>NSAllowsArbitraryLoads</key>
+  	<true/>
+	</dict>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

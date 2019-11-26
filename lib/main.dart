@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Color(0xFF0A0E21),
           scaffoldBackgroundColor: Color(0xFF0A0E21),
           accentColor: Color.fromRGBO(218, 53, 88, 100),
+          hoverColor: Color.fromRGBO(218, 53, 88, 100),
           textTheme: TextTheme(
             title: TextStyle(fontFamily: 'ModernMachine'),
             headline: TextStyle(fontFamily: 'Mollen', fontWeight: FontWeight.bold),
