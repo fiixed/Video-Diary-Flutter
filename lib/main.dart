@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
-      value: VideosProvider(),
+      value: VideosProvider(cameras),
       child: MaterialApp(
         title: 'Video Diary',
         theme: ThemeData.dark().copyWith(
@@ -43,11 +43,13 @@ class MyApp extends StatelessWidget {
         home: VideosGridScreen(),
         routes: {
           AddVideoScreen.routeName: (ctx) => AddVideoScreen(),
-          VideoCaptureScreen.routeName: (ctx) => VideoCaptureScreen(cameras),
+          VideoCaptureScreen.routeName: (ctx) => VideoCaptureScreen(),
           VideosGridScreen.routeName: (ctx) => VideosGridScreen(),
           VideoDetailScreen.routeName: (ctx) => VideoDetailScreen(),
         },
+        
       ),
+     
     );
   }
 }

@@ -4,13 +4,15 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:video_diary/providers/videos_provider.dart';
 
 import './add_video_screen.dart';
 
 class VideoCaptureScreen extends StatefulWidget {
   static const routeName = '/video-capture-screen';
-  final List<CameraDescription> cameras;
-  VideoCaptureScreen(this.cameras);
+   List<CameraDescription> cameras = [];
+  //VideoCaptureScreen(this.cameras);
   @override
   _VideoCaptureScreenState createState() {
     return _VideoCaptureScreenState();
@@ -46,6 +48,16 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+   
+    
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    widget.cameras = Provider.of<VideosProvider>(context, listen: false).cams;
+
+    
   }
 
   @override

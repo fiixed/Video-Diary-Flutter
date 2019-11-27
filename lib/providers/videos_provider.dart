@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 
 import 'package:flutter/foundation.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:camera/camera.dart' as cam;
 
 import '../models/video.dart';
 import '../helpers/db_helper.dart';
@@ -11,12 +13,23 @@ import '../helpers/location_helper.dart';
 class VideosProvider with ChangeNotifier {
   int _quality = 50;
   int _size = 600;
-  int _timeMs = 0;
+  int _timeMs = 5;
 
   List<Video> _items = [];
+  List<cam.CameraDescription> _cameras;
+
+  VideosProvider(this._cameras);
 
   List<Video> get items {
     return [..._items];
+  }
+
+  List<cam.CameraDescription> get cams {
+    return [..._cameras];
+  }
+
+  void set cameras(List<cam.CameraDescription> cams) {
+    _cameras = cams;
   }
 
   Video findById(String id) {
@@ -62,9 +75,11 @@ class VideosProvider with ChangeNotifier {
   }
 
   Future<File> getThumbnail(String videoPath) async {
+    print(videoPath);
+    print(videoPath.split('.')[0] + '.jpg');
     final thumbnail = await VideoThumbnail.thumbnailFile(
         video: videoPath,
-        thumbnailPath: null,
+        thumbnailPath: videoPath.split('.')[0] + '.jpg',
         imageFormat: ImageFormat.JPEG,
         maxHeightOrWidth: _size,
         timeMs: _timeMs,
