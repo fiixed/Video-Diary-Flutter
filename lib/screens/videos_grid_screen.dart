@@ -22,7 +22,10 @@ class VideosGridScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
-        title: Text('VIDEO DIARY', style: Theme.of(context).textTheme.title,),
+        title: Text(
+          'VIDEO DIARY',
+          style: Theme.of(context).textTheme.title,
+        ),
         centerTitle: true,
         actions: <Widget>[
           IconButton(
@@ -36,73 +39,58 @@ class VideosGridScreen extends StatelessWidget {
       body: FutureBuilder(
         future: Provider.of<VideosProvider>(context, listen: false)
             .fetchAndSetVideos(),
-        builder: (ctx, snapshot) =>
-            snapshot.connectionState == ConnectionState.waiting
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Consumer<VideosProvider>(
-                    child: Center(
-                      child: Text(
-                        'Got no videos yet, start creating some!',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    builder: (ctx, videosProvider, ch) =>
-                        videosProvider.items.length <= 0
-                            ? ch
-                            : GridView.builder(
-                                itemCount: videosProvider.items.length,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                        childAspectRatio:
-                                            widthScreen / heightScreen + 0.15,
-                                        crossAxisCount: 2),
-                                itemBuilder: (BuildContext context, int index) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).pushNamed(
-                                          VideoDetailScreen.routeName,
-                                          arguments:
-                                              videosProvider.items[index].id);
-                                    },
-                                    child: GridTile(
-                                      footer: GridTileBar(
-                                        backgroundColor: Colors.black45,
-                                        title: _GridTitleText( 
-                                          videosProvider.getDate(videosProvider.items[index].id)
-                                            ),
-                                        subtitle: _GridTitleText(videosProvider
-                                            .items[index].mood, ),
-                                        // trailing: Icon(
-                                        //   icon,
-                                        //   color: Colors.white,
-                                        // ),
-                                      ),
-                                      child: Image.file(
-                                        File(videosProvider.items[index].thumbnailPath),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  );
-                                  // return GestureDetector(
-
-                                  // child: GridTile(
-                                  //   header: Text(
-                                  //       videosProvider.items[index].location.address),
-                                  //       footer: ,
-                                  //   child: Image.file(
-                                  //       videosProvider.items[index].thumbnail),
-                                  // ),
-                                  // onTap: () {
-                                  //   Navigator.of(context).pushNamed(
-                                  //       VideoDetailScreen.routeName,
-                                  //       arguments: videosProvider.items[index].id);
-                                  // },
-                                  // );
-                                },
-                              ),
+        builder: (ctx, snapshot) => snapshot.connectionState ==
+                ConnectionState.waiting
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Consumer<VideosProvider>(
+                child: Center(
+                  child: Text(
+                    'Got no videos yet, start creating some!',
+                    style: TextStyle(color: Colors.white),
                   ),
+                ),
+                builder: (ctx, videosProvider, ch) => videosProvider
+                            .items.length <=
+                        0
+                    ? ch
+                    : GridView.builder(
+                        itemCount: videosProvider.items.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            childAspectRatio: widthScreen / heightScreen + 0.15,
+                            crossAxisCount: 2),
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(
+                                  VideoDetailScreen.routeName,
+                                  arguments: videosProvider.items[index].id);
+                            },
+                            child: GridTile(
+                              footer: GridTileBar(
+                                backgroundColor: Colors.black45,
+                                title: _GridTitleText(videosProvider
+                                    .getDate(videosProvider.items[index].id)),
+                                subtitle: _GridTitleText(
+                                  videosProvider.items[index].mood,
+                                ),
+                              ),
+                              child: Image.file(
+                                File(videosProvider.items[index].thumbnailPath),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+              ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed(VideoCaptureScreen.routeName);
+        },
+        child: Icon(Icons.add),
       ),
     );
   }
