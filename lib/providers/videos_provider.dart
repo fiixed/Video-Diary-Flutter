@@ -75,12 +75,10 @@ class VideosProvider with ChangeNotifier {
   }
 
   Future<File> getThumbnail(String videoPath) async {
-    print(videoPath);
-    print(videoPath.split('.')[0] + '.jpg');
     final thumbnail = await VideoThumbnail.thumbnailFile(
         video: videoPath,
-        thumbnailPath: videoPath.split('.')[0] + '.jpg',
-        imageFormat: ImageFormat.JPEG,
+        thumbnailPath: null,
+        imageFormat: ImageFormat.PNG,
         maxHeightOrWidth: _size,
         timeMs: _timeMs,
         quality: _quality);

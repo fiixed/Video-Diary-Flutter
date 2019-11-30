@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -79,7 +80,7 @@ class VideosGridScreen extends StatelessWidget {
                                         // ),
                                       ),
                                       child: Image.file(
-                                        videosProvider.items[index].thumbnail,
+                                        File(videosProvider.items[index].thumbnailPath),
                                         fit: BoxFit.cover,
                                       ),
                                     ),

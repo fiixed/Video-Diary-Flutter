@@ -65,11 +65,10 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
     if (_videoPath == null || _videoLocation == null) {
       return;
     }
-    print(_videoPath);
-    print(_videoLocation);
+ 
     File _thumbnail = await Provider.of<VideosProvider>(context, listen: false)
         .getThumbnail(_videoPath);
-        print("help");
+        
     Provider.of<VideosProvider>(context, listen: false)
         .addVideo(_videoPath, _thumbnail, _videoLocation, _mood);
     Navigator.of(context).pushNamed(VideosGridScreen.routeName);
