@@ -7,6 +7,7 @@ import 'package:video_player/video_player.dart';
 import '../providers/videos_provider.dart';
 import '../models/video.dart';
 import '../screens/map_screen.dart';
+import '../screens/videos_grid_screen.dart';
 
 class VideoDetailScreen extends StatefulWidget {
   static const routeName = '/video-detail';
@@ -29,8 +30,7 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
     videosProvider = Provider.of<VideosProvider>(context, listen: false);
     selectedVideo = videosProvider.findById(id);
     videoDate = Provider.of<VideosProvider>(context, listen: false)
-                .getDate(selectedVideo.id);
-
+        .getDate(selectedVideo.id);
 
     if (_videoPlayerController == null) {
       _videoPlayerController =
@@ -118,10 +118,24 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
                           );
                         },
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
                     ],
                   ),
                 ),
               ),
+            ),
+            RaisedButton.icon(
+              icon: Icon(Icons.delete),
+              label: Text('Delete Video'),
+              elevation: 0,
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              color: Theme.of(context).accentColor,
+              onPressed: () {
+                Navigator.of(context)
+                    .pushReplacementNamed(VideosGridScreen.routeName);
+              },
             ),
           ],
         ),

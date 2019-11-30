@@ -8,10 +8,11 @@ import 'package:provider/provider.dart';
 import 'package:video_diary/providers/videos_provider.dart';
 
 import './add_video_screen.dart';
+import '../screens/videos_grid_screen.dart';
 
 class VideoCaptureScreen extends StatefulWidget {
   static const routeName = '/video-capture-screen';
-   List<CameraDescription> cameras = [];
+  List<CameraDescription> cameras = [];
   //VideoCaptureScreen(this.cameras);
   @override
   _VideoCaptureScreenState createState() {
@@ -48,16 +49,12 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-   
-    
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     widget.cameras = Provider.of<VideosProvider>(context, listen: false).cams;
-
-    
   }
 
   @override
@@ -81,53 +78,61 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
     }
   }
 
+  Future<bool> onBackButtonPressed() async {
+    await Navigator.of(context).pushNamed(VideosGridScreen.routeName);
+    return true;
+  }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text(
-          'Video Capture',
-          style: Theme.of(context).textTheme.title,
+    return WillPopScope(
+      onWillPop: onBackButtonPressed,
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+          title: Text(
+            'Video Capture',
+            style: Theme.of(context).textTheme.title,
+          ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(1.0),
-                child: Center(
-                  child: _cameraPreviewWidget(),
+        body: Column(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: Center(
+                    child: _cameraPreviewWidget(),
+                  ),
                 ),
-              ),
-              decoration: BoxDecoration(
-                color: Colors.black,
-                border: Border.all(
-                  color: controller != null && controller.value.isRecordingVideo
-                      ? Colors.redAccent
-                      : Colors.grey,
-                  width: 3.0,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  border: Border.all(
+                    color:
+                        controller != null && controller.value.isRecordingVideo
+                            ? Theme.of(context).accentColor
+                            : Colors.grey,
+                    width: 3.0,
+                  ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                _cameraTogglesRowWidget(),
-                
-              ],
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  _cameraTogglesRowWidget(),
+                ],
+              ),
             ),
-          ),
-          _toggleAudioWidget(),
-          _captureControlRowWidget(),
-        ],
+            _toggleAudioWidget(),
+            _captureControlRowWidget(),
+          ],
+        ),
       ),
     );
   }
@@ -189,7 +194,7 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
         // ),
         IconButton(
           icon: const Icon(Icons.videocam),
-          color: Colors.blue,
+          color: Theme.of(context).toggleableActiveColor,
           onPressed: controller != null &&
                   controller.value.isInitialized &&
                   !controller.value.isRecordingVideo
@@ -200,7 +205,7 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
           icon: controller != null && controller.value.isRecordingPaused
               ? Icon(Icons.play_arrow)
               : Icon(Icons.pause),
-          color: Colors.blue,
+          color: Theme.of(context).toggleableActiveColor,
           onPressed: controller != null &&
                   controller.value.isInitialized &&
                   controller.value.isRecordingVideo
@@ -211,7 +216,7 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
         ),
         IconButton(
           icon: const Icon(Icons.stop),
-          color: Colors.red,
+          color: Theme.of(context).accentColor,
           onPressed: controller != null &&
                   controller.value.isInitialized &&
                   controller.value.isRecordingVideo
@@ -234,16 +239,16 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
       for (CameraDescription cameraDescription in widget.cameras) {
         toggles.add(
           SizedBox(
-              width: widthScreen/3.4,
-              child: RadioListTile<CameraDescription>(
-                title: Icon(getCameraLensIcon(cameraDescription.lensDirection)),
-                groupValue: controller?.description,
-                value: cameraDescription,
-                onChanged: controller != null && controller.value.isRecordingVideo
-                    ? null
-                    : onNewCameraSelected,
-              ),
+            width: widthScreen / 3.4,
+            child: RadioListTile<CameraDescription>(
+              title: Icon(getCameraLensIcon(cameraDescription.lensDirection)),
+              groupValue: controller?.description,
+              value: cameraDescription,
+              onChanged: controller != null && controller.value.isRecordingVideo
+                  ? null
+                  : onNewCameraSelected,
             ),
+          ),
         );
       }
     }

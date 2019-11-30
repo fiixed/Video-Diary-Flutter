@@ -147,7 +147,7 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
               label: Text('Delete Video'),
               elevation: 0,
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              color: Theme.of(context).errorColor,
+              color: Theme.of(context).accentColor,
               onPressed: () {
                 Navigator.of(context)
                     .pushReplacementNamed(VideoCaptureScreen.routeName);
@@ -158,7 +158,8 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
               label: Text('Add Video'),
               elevation: 0,
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).toggleableActiveColor,
+              textColor: Color(0xFF0A0E21),
               onPressed: _saveVideo,
             ),
           ],
