@@ -6,6 +6,7 @@ import '../screens/map_screen.dart';
 
 class LocationInput extends StatefulWidget {
   final Function onSelectLocation;
+ 
   LocationInput(this.onSelectLocation);
 
   @override

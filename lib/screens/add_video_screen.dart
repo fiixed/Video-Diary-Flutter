@@ -23,6 +23,7 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
   String _videoPath;
   VideoLocation _videoLocation;
   String _mood = '😀';
+  bool _previewLoaded = false;
 
   @override
   void initState() {
@@ -62,7 +63,7 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
   }
 
   Future<void> _saveVideo() async {
-    if (_videoPath == null || _videoLocation == null) {
+    if (_videoPath == null || _videoLocation == null || _previewLoaded == false) {
       return;
     }
  
@@ -76,8 +77,12 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
   }
 
   void _selectLocation(double lat, double lng) async {
-    final apiKey = await LocationHelper.getApiKey();
+    //final apiKey = await LocationHelper.getApiKey();
     _videoLocation = VideoLocation(latitude: lat, longitude: lng);
+    setState(() {
+      _previewLoaded = true;
+    });
+    
   }
 
   _updateMood(String text) {
@@ -85,6 +90,8 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
       _mood = text;
     });
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -149,6 +156,9 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               color: Theme.of(context).accentColor,
               onPressed: () {
+                if (_previewLoaded == false) {
+                  return;
+                }
                 Navigator.of(context)
                     .pushReplacementNamed(VideoCaptureScreen.routeName);
               },
