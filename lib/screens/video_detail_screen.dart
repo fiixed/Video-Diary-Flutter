@@ -132,7 +132,8 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
               elevation: 0,
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               color: Theme.of(context).accentColor,
-              onPressed: () {
+              onPressed: () async {
+                await videosProvider.deleteVideo(selectedVideo.id);
                 Navigator.of(context)
                     .pushReplacementNamed(VideosGridScreen.routeName);
               },

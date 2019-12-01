@@ -74,6 +74,12 @@ class VideosProvider with ChangeNotifier {
     });
   }
 
+  Future<void> deleteVideo(String id) {
+    _items.removeWhere((video) => video.id == id);
+     notifyListeners();
+     DBHelper.delete(id);
+  }
+
   Future<File> getThumbnail(String videoPath) async {
     final thumbnail = await VideoThumbnail.thumbnailFile(
         video: videoPath,
