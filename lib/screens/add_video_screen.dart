@@ -63,17 +63,18 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
   }
 
   Future<void> _saveVideo() async {
-    if (_videoPath == null || _videoLocation == null || _previewLoaded == false) {
+    if (_videoPath == null ||
+        _videoLocation == null ||
+        _previewLoaded == false) {
       return;
     }
- 
+
     File _thumbnail = await Provider.of<VideosProvider>(context, listen: false)
         .getThumbnail(_videoPath);
-        
+
     Provider.of<VideosProvider>(context, listen: false)
         .addVideo(_videoPath, _thumbnail, _videoLocation, _mood);
     Navigator.of(context).pushNamed(VideosGridScreen.routeName);
-
   }
 
   void _selectLocation(double lat, double lng) async {
@@ -82,7 +83,6 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
     setState(() {
       _previewLoaded = true;
     });
-    
   }
 
   _updateMood(String text) {
@@ -90,8 +90,6 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
       _mood = text;
     });
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -156,8 +154,12 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               color: Theme.of(context).accentColor,
               onPressed: () {
-                if (_previewLoaded == false) {
+                if (_previewLoaded == false || _videoPath == null) {
                   return;
+                }
+                File file = new File(_videoPath);
+                if (file.existsSync()) {
+                  file.delete();
                 }
                 Navigator.of(context)
                     .pushReplacementNamed(VideoCaptureScreen.routeName);
