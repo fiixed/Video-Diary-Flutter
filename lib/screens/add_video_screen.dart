@@ -78,7 +78,6 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
   }
 
   void _selectLocation(double lat, double lng) async {
-    //final apiKey = await LocationHelper.getApiKey();
     _videoLocation = VideoLocation(latitude: lat, longitude: lng);
     setState(() {
       _previewLoaded = true;
