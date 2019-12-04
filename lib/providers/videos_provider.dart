@@ -73,7 +73,7 @@ class VideosProvider with ChangeNotifier {
     });
   }
 
-  Future<void> deleteVideo(String id) {
+  void deleteVideo(String id) {
     _items.removeWhere((video) => video.id == id);
      notifyListeners();
      DBHelper.delete(id);

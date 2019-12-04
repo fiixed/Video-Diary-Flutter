@@ -13,7 +13,7 @@ class DBHelper {
   }
 
   static Future<void> insert(String table, Map<String, Object> data) async {
-    final db = await DBHelper.database();
+    final Database db = await DBHelper.database();
     db.insert(
       table,
       data,
@@ -22,12 +22,12 @@ class DBHelper {
   }
 
   static Future<int> delete(String id) async {
-    final db = await DBHelper.database();
-    return await db.delete('user_videos', where: 'id = ?', whereArgs: [id]);
+    final Database db = await DBHelper.database();
+    return await db.delete('user_videos', where: 'id = ?', whereArgs: <String>[id]);
   }
 
   static Future<List<Map<String, dynamic>>> getData(String table) async {
-    final db = await DBHelper.database();
+    final Database db = await DBHelper.database();
     return db.query(table);
   }
 }

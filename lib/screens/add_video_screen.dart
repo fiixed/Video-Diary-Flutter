@@ -70,7 +70,7 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
     });
   }
 
-  _updateMood(String text) {
+  void _updateMood(String text) {
     setState(() {
       _mood = text;
     });

@@ -105,7 +105,7 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
                         child: Text('View on Map'),
                         onPressed: () {
                           Navigator.of(context).push(
-                            MaterialPageRoute(
+                            MaterialPageRoute<Object>(
                               fullscreenDialog: true,
                               builder: (ctx) => MapScreen(
                                 locData: LocationData.fromMap({
