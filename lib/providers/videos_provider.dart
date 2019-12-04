@@ -1,9 +1,8 @@
 import 'dart:io';
-import 'package:intl/intl.dart';
 
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:camera/camera.dart' as cam;
 
 import '../models/video.dart';

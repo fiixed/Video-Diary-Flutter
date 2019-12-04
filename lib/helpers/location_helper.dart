@@ -8,7 +8,6 @@ import './secret_loader.dart';
 
 class LocationHelper {
  
-   
    static Future<String> getApiKey() async {
     Secret secret =  await SecretLoader(secretPath: "secrets.json").load();
     return secret.apiKey;

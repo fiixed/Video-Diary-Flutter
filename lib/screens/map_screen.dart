@@ -4,7 +4,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
 class MapScreen extends StatefulWidget {
-  //final VideoLocation initialLocation;
   final LocationData locData;
   final bool isSelecting;
 

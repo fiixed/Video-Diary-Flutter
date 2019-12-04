@@ -7,7 +7,6 @@ import '../screens/video_capture_screen.dart';
 import '../screens/videos_grid_screen.dart';
 import '../providers/videos_provider.dart';
 import '../widgets/location_input.dart';
-import '../helpers/location_helper.dart';
 import '../widgets/mood_dropdown_button.dart';
 import '../models/video.dart';
 
@@ -25,19 +24,6 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
   String _mood = '😀';
   bool _previewLoaded = false;
 
-  @override
-  void initState() {
-    super.initState();
-    // _videoPlayerController = VideoPlayerController.file(File(_videoPath));
-
-    // _chewieController = ChewieController(
-    //   videoPlayerController: _videoPlayerController,
-    //   aspectRatio: 2 / 3,
-    //   autoPlay: true,
-    //   looping: true,
-    //   allowFullScreen: false,
-    // );
-  }
 
   @override
   void didChangeDependencies() {
@@ -111,10 +97,6 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
                     children: <Widget>[
-                      // TextField(
-                      //   decoration: InputDecoration(labelText: 'Title'),
-                      //   controller: _titleController,
-                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[

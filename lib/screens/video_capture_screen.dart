@@ -12,7 +12,7 @@ import '../screens/videos_grid_screen.dart';
 
 class VideoCaptureScreen extends StatefulWidget {
   static const routeName = '/video-capture-screen';
-  List<CameraDescription> cameras = [];
+  
   //VideoCaptureScreen(this.cameras);
   @override
   _VideoCaptureScreenState createState() {
@@ -41,9 +41,9 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
   CameraController controller;
   String imagePath;
   String videoPath;
-  //VideoPlayerController videoController;
   VoidCallback videoPlayerListener;
   bool enableAudio = true;
+  List<CameraDescription> cameras = [];
 
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    widget.cameras = Provider.of<VideosProvider>(context, listen: false).cams;
+    cameras = Provider.of<VideosProvider>(context, listen: false).cams;
   }
 
   @override
@@ -233,10 +233,10 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
     final double widthScreen = mediaQueryData.size.width;
     final List<Widget> toggles = <Widget>[];
 
-    if (widget.cameras.isEmpty) {
+    if (cameras.isEmpty) {
       return const Text('No camera found');
     } else {
-      for (CameraDescription cameraDescription in widget.cameras) {
+      for (CameraDescription cameraDescription in cameras) {
         toggles.add(
           SizedBox(
             width: widthScreen / 3.4,
