@@ -1,16 +1,18 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:location/location.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
-import '../providers/videos_provider.dart';
+
 import '../models/video.dart';
+import '../providers/videos_provider.dart';
 import '../screens/map_screen.dart';
 import '../screens/videos_grid_screen.dart';
 
 class VideoDetailScreen extends StatefulWidget {
-  static const routeName = '/video-detail';
+  static const String routeName = '/video-detail';
 
   @override
   _VideoDetailScreenState createState() => _VideoDetailScreenState();
@@ -26,7 +28,7 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final id = ModalRoute.of(context).settings.arguments;
+    final Object id = ModalRoute.of(context).settings.arguments;
     videosProvider = Provider.of<VideosProvider>(context, listen: false);
     selectedVideo = videosProvider.findById(id);
     videoDate = Provider.of<VideosProvider>(context, listen: false)
@@ -78,7 +80,7 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
                           controller: _chewieController,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
@@ -87,7 +89,7 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
                           fontSize: 40,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
@@ -98,17 +100,17 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
                           color: Colors.grey,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       FlatButton(
-                        child: Text('View on Map'),
+                        child: const Text('View on Map'),
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute<Object>(
                               fullscreenDialog: true,
-                              builder: (ctx) => MapScreen(
-                                locData: LocationData.fromMap({
+                              builder: (BuildContext ctx) => MapScreen(
+                                locData: LocationData.fromMap(<String, double>{
                                   'latitude': selectedVideo.location.latitude,
                                   'longitude': selectedVideo.location.longitude,
                                 }),
@@ -118,7 +120,7 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
                           );
                         },
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                     ],
@@ -128,7 +130,7 @@ class _VideoDetailScreenState extends State<VideoDetailScreen> {
             ),
             RaisedButton.icon(
               icon: Icon(Icons.delete),
-              label: Text('Delete Video'),
+              label: const Text('Delete Video'),
               elevation: 0,
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               color: Theme.of(context).accentColor,

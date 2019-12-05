@@ -5,53 +5,57 @@ import 'package:intl/intl.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:camera/camera.dart' as cam;
 
-import '../models/video.dart';
 import '../helpers/db_helper.dart';
 import '../helpers/location_helper.dart';
 
+import '../models/video.dart';
+
+
+
 class VideosProvider with ChangeNotifier {
-  int _quality = 50;
-  int _size = 600;
-  int _timeMs = 5;
-
-  List<Video> _items = [];
-  List<cam.CameraDescription> _cameras;
-
+  
   VideosProvider(this._cameras);
 
+  final int _quality = 50;
+  final int _size = 600;
+  final int _timeMs = 5;
+
+  List<Video> _items = <Video>[];
+  List<cam.CameraDescription> _cameras;
+
   List<Video> get items {
-    return [..._items];
+    return <Video>[..._items];
   }
 
   List<cam.CameraDescription> get cams {
-    return [..._cameras];
+    return <cam.CameraDescription>[..._cameras];
   }
 
-  void set cameras(List<cam.CameraDescription> cams) {
+  set cameras(List<cam.CameraDescription> cams) {
     _cameras = cams;
   }
 
   Video findById(String id) {
-    return _items.firstWhere((video) => video.id == id);
+    return _items.firstWhere((Video video) => video.id == id);
   }
 
   String getDate(String id) {
-    Video pickedVideo = _items.firstWhere((video) => video.id == id, orElse: () => _items[0]);
+    final Video pickedVideo = _items.firstWhere((Video video) => video.id == id, orElse: () => _items[0]);
     return DateFormat.yMEd().add_jms().format(DateTime.parse(pickedVideo.id)) ;
   }
 
   Future<void> addVideo(
       String pickedVideoPath, File pickedThumbnail, VideoLocation videoLocation,
       String pickedMood) async {
-    final apiKey = await LocationHelper.getApiKey();
-    final address = await LocationHelper.getPlaceAddress(
+    final String apiKey = await LocationHelper.getApiKey();
+    final String address = await LocationHelper.getPlaceAddress(
         videoLocation.latitude, videoLocation.longitude, apiKey);
-    final updatedLocation = VideoLocation(
+    final VideoLocation updatedLocation = VideoLocation(
       latitude: videoLocation.latitude,
       longitude: videoLocation.longitude,
       address: address,
     );
-    final newVideo = Video(
+    final Video newVideo = Video(
       id: DateTime.now().toString(),
       videoPath: pickedVideoPath,
       mood: pickedMood,
@@ -62,7 +66,7 @@ class VideosProvider with ChangeNotifier {
     print(pickedThumbnail.path);
     _items.insert(0, newVideo);
     notifyListeners();
-    DBHelper.insert('user_videos', {
+    DBHelper.insert('user_videos', <String, dynamic>{
       'id': newVideo.id,
       'mood': newVideo.mood,
       'thumbnailPath': newVideo.thumbnailPath,
@@ -74,13 +78,13 @@ class VideosProvider with ChangeNotifier {
   }
 
   void deleteVideo(String id) {
-    _items.removeWhere((video) => video.id == id);
+    _items.removeWhere((Video video) => video.id == id);
      notifyListeners();
      DBHelper.delete(id);
   }
 
   Future<File> getThumbnail(String videoPath) async {
-    final thumbnail = await VideoThumbnail.thumbnailFile(
+    final String thumbnail = await VideoThumbnail.thumbnailFile(
         video: videoPath,
         thumbnailPath: null,
         imageFormat: ImageFormat.PNG,
@@ -91,10 +95,10 @@ class VideosProvider with ChangeNotifier {
   }
 
   Future<void> fetchAndSetVideos() async {
-    final dataList = await DBHelper.getData('user_videos');
+    final List<Map<String, dynamic>> dataList = await DBHelper.getData('user_videos');
     _items = dataList.reversed
         .map(
-          (item) => Video(
+          (Map<String, dynamic>item) => Video(
             id: item['id'],
             mood: item['mood'],
             location: VideoLocation(

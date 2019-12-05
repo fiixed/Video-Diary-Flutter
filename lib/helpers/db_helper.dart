@@ -4,9 +4,9 @@ import 'package:sqflite/sqlite_api.dart';
 
 class DBHelper {
   static Future<Database> database() async {
-    final dbPath = await sql.getDatabasesPath();
+    final String dbPath = await sql.getDatabasesPath();
     return sql.openDatabase(path.join(dbPath, 'videos.db'),
-        onCreate: (db, version) {
+        onCreate: (Database db, int version) {
       return db.execute(
           'CREATE TABLE user_videos(id TEXT PRIMARY KEY, mood TEXT, thumbnailPath TEXT, videoPath TEXT, loc_lat REAL, loc_lng REAL, address TEXT)');
     }, version: 1);

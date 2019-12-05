@@ -7,13 +7,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:video_diary/providers/videos_provider.dart';
 
-import './add_video_screen.dart';
 import '../screens/videos_grid_screen.dart';
+import './add_video_screen.dart';
 
 class VideoCaptureScreen extends StatefulWidget {
-  static const routeName = '/video-capture-screen';
-  
-  //VideoCaptureScreen(this.cameras);
+  static const String routeName = '/video-capture-screen';
+
   @override
   _VideoCaptureScreenState createState() {
     return _VideoCaptureScreenState();
@@ -43,7 +42,7 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
   String videoPath;
   VoidCallback videoPlayerListener;
   bool enableAudio = true;
-  List<CameraDescription> cameras = [];
+  List<CameraDescription> cameras = <CameraDescription>[];
 
   @override
   void initState() {
@@ -229,7 +228,7 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
 
   /// Display a row of toggle to select the camera (or a message if no camera is available).
   Widget _cameraTogglesRowWidget() {
-    var mediaQueryData = MediaQuery.of(context);
+    final MediaQueryData mediaQueryData = MediaQuery.of(context);
     final double widthScreen = mediaQueryData.size.width;
     final List<Widget> toggles = <Widget>[];
 
@@ -262,7 +261,7 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
     _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message)));
   }
 
-  void onNewCameraSelected(CameraDescription cameraDescription) async {
+  Future<void> onNewCameraSelected(CameraDescription cameraDescription) async {
     if (controller != null) {
       await controller.dispose();
     }
@@ -274,7 +273,11 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
 
     // If the controller is updated then update the UI.
     controller.addListener(() {
-      if (mounted) setState(() {});
+      if (mounted) {
+        setState(() {
+
+        });
+      }
       if (controller.value.hasError) {
         showInSnackBar('Camera error ${controller.value.errorDescription}');
       }
@@ -306,14 +309,22 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
 
   void onVideoRecordButtonPressed() {
     startVideoRecording().then((String filePath) {
-      if (mounted) setState(() {});
+      if (mounted) {
+        setState(() {
+
+        });
+      }
       //if (filePath != null) showInSnackBar('Saving video to $filePath');
     });
   }
 
   void onStopButtonPressed() {
     stopVideoRecording().then((_) {
-      if (mounted) setState(() {});
+      if (mounted) {
+        setState(() {
+
+        });
+      }
       //showInSnackBar('Video recorded to: $videoPath');
     });
     Navigator.of(context)
@@ -322,14 +333,22 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
 
   void onPauseButtonPressed() {
     pauseVideoRecording().then((_) {
-      if (mounted) setState(() {});
+      if (mounted) {
+        setState(() {
+
+        });
+      }
       showInSnackBar('Video recording paused');
     });
   }
 
   void onResumeButtonPressed() {
     resumeVideoRecording().then((_) {
-      if (mounted) setState(() {});
+      if (mounted) {
+        setState(() {
+
+        });
+      }
       showInSnackBar('Video recording resumed');
     });
   }
@@ -362,14 +381,14 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
 
   Future<void> stopVideoRecording() async {
     if (!controller.value.isRecordingVideo) {
-      return null;
+      return;
     }
 
     try {
       await controller.stopVideoRecording();
     } on CameraException catch (e) {
       _showCameraException(e);
-      return null;
+      return;
     }
 
     //await _startVideoPlayer();
@@ -377,7 +396,7 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
 
   Future<void> pauseVideoRecording() async {
     if (!controller.value.isRecordingVideo) {
-      return null;
+      return;
     }
 
     try {
@@ -390,7 +409,7 @@ class _VideoCaptureScreenState extends State<VideoCaptureScreen>
 
   Future<void> resumeVideoRecording() async {
     if (!controller.value.isRecordingVideo) {
-      return null;
+      return;
     }
 
     try {

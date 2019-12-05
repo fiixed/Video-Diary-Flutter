@@ -9,7 +9,7 @@ import './secret_loader.dart';
 class LocationHelper {
  
    static Future<String> getApiKey() async {
-    Secret secret =  await SecretLoader(secretPath: "secrets.json").load();
+    final Secret secret =  await SecretLoader(secretPath: 'secrets.json').load();
     return secret.apiKey;
     
   }
@@ -19,8 +19,8 @@ class LocationHelper {
   }
 
   static Future<String> getPlaceAddress(double lat, double lng, String apiKey) async {
-    final url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$apiKey';
-    final response = await http.get(url);
+    final String url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$apiKey';
+    final http.Response response = await http.get(url);
     return json.decode(response.body)['results'][0]['formatted_address'];
   }
 

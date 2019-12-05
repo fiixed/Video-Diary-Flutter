@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 
 
 class MoodDropdownButton extends StatefulWidget {
-  final void Function(String value) parentAction;
 
-  MoodDropdownButton(this.parentAction);
+  const MoodDropdownButton(this.parentAction);
+
+  final void Function(String value) parentAction;
 
   @override
   _MoodDropdownButtonState createState() => _MoodDropdownButtonState();

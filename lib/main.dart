@@ -3,10 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:camera/camera.dart';
 
 import './providers/videos_provider.dart';
-import './screens/videos_grid_screen.dart';
 import './screens/add_video_screen.dart';
 import './screens/video_capture_screen.dart';
 import './screens/video_detail_screen.dart';
+import './screens/videos_grid_screen.dart';
+
 
 List<CameraDescription> cameras;
 
@@ -24,29 +25,28 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
+    return ChangeNotifierProvider<VideosProvider>.value(
       value: VideosProvider(cameras),
       child: MaterialApp(
         title: 'Video Diary',
         theme: ThemeData.dark().copyWith(
-          primaryColor: Color(0xFF0A0E21),
-          scaffoldBackgroundColor: Color(0xFF0A0E21),
-          accentColor: Color.fromRGBO(218, 53, 88, 100),
-          hoverColor: Color.fromRGBO(218, 53, 88, 100),
-          //toggleableActiveColor: Color.fromRGBO(218, 53, 88, 100),
+          primaryColor: const Color(0xFF0A0E21),
+          scaffoldBackgroundColor: const Color(0xFF0A0E21),
+          accentColor: const Color.fromRGBO(218, 53, 88, 100),
+          hoverColor: const Color.fromRGBO(218, 53, 88, 100),
           textTheme: TextTheme(
-            title: TextStyle(fontFamily: 'ModernMachine'),
+            title: const TextStyle(fontFamily: 'ModernMachine'),
             headline: TextStyle(fontFamily: 'Mollen', fontWeight: FontWeight.bold),
-            body1: TextStyle(fontFamily: 'Mollen'),
-            button: TextStyle(fontFamily: 'Mollen'),
+            body1: const TextStyle(fontFamily: 'Mollen'),
+            button: const TextStyle(fontFamily: 'Mollen'),
           ),
         ),
-        home: VideosGridScreen(),
-        routes: {
-          AddVideoScreen.routeName: (ctx) => AddVideoScreen(),
-          VideoCaptureScreen.routeName: (ctx) => VideoCaptureScreen(),
-          VideosGridScreen.routeName: (ctx) => VideosGridScreen(),
-          VideoDetailScreen.routeName: (ctx) => VideoDetailScreen(),
+        home: const VideosGridScreen(),
+        routes: <String, Widget Function(BuildContext)>{
+          AddVideoScreen.routeName: (BuildContext ctx) => AddVideoScreen(),
+          VideoCaptureScreen.routeName: (BuildContext ctx) => VideoCaptureScreen(),
+          VideosGridScreen.routeName: (BuildContext ctx) => const VideosGridScreen(),
+          VideoDetailScreen.routeName: (BuildContext ctx) => VideoDetailScreen(),
         },
         
       ),

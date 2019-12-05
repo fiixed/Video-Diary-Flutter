@@ -2,18 +2,20 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import './video_capture_screen.dart';
 import '../providers/videos_provider.dart';
 import '../screens/video_detail_screen.dart';
+import './video_capture_screen.dart';
+
 
 class VideosGridScreen extends StatelessWidget {
-  static const routeName = '/videos-grid-screen';
 
   const VideosGridScreen({Key key}) : super(key: key);
 
+  static const String routeName = '/videos-grid-screen';
+
   @override
   Widget build(BuildContext context) {
-    var mediaQueryData = MediaQuery.of(context);
+    final MediaQueryData mediaQueryData = MediaQuery.of(context);
     final double widthScreen = mediaQueryData.size.width;
     final double appBarHeight = kToolbarHeight;
     final double paddingBottom = mediaQueryData.padding.bottom;
@@ -36,13 +38,13 @@ class VideosGridScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: FutureBuilder(
+      body: FutureBuilder<void>(
         future: Provider.of<VideosProvider>(context, listen: false)
             .fetchAndSetVideos(),
-        builder: (ctx, snapshot) => snapshot.connectionState ==
+        builder: (BuildContext ctx, AsyncSnapshot<void> snapshot) => snapshot.connectionState ==
                 ConnectionState.waiting
             ? Center(
-                child: CircularProgressIndicator(),
+                child: const CircularProgressIndicator(),
               )
             : Consumer<VideosProvider>(
                 child: Center(
@@ -51,9 +53,8 @@ class VideosGridScreen extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
-                builder: (ctx, videosProvider, ch) => videosProvider
-                            .items.length <=
-                        0
+                builder: (BuildContext ctx, VideosProvider videosProvider, Widget ch) => videosProvider
+                            .items.isEmpty
                     ? ch
                     : GridView.builder(
                         itemCount: videosProvider.items.length,
