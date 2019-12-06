@@ -1,4 +1,4 @@
-package com.example.video_diary
+package com.fiixed.video_diary
 
 import android.os.Bundle
 
