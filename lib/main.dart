@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
       value: VideosProvider(cameras),
       child: MaterialApp(
         title: 'Video Diary',
+        debugShowCheckedModeBanner: false, 
         theme: ThemeData.dark().copyWith(
           primaryColor: const Color(0xFF0A0E21),
           scaffoldBackgroundColor: const Color(0xFF0A0E21),
